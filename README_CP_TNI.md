@@ -1,0 +1,7 @@
+# Same-backend CP-TNI supplementary files
+
+`verification_canonical_noncanonical_CP_TNI.ipynb` is the executed notebook for the single combined IBM Quantum experiment on `ibm_phoenix` (job `daj7e68mhr3c73e8kotg`). It contains 216 circuits at 4096 shots each, coherence-sensitive state tomography for the canonical `(M1,M2)=(0,0)` and phase-sensitive `(0,1)` resource members, four-probe logical tomography, convex CP-TNI Choi fitting, and 500-sample multinomial bootstrap intervals.
+
+The process reconstructions use preselected representative sectors: `(x,m)=(1,0)` for the canonical resource, which exercises the nontrivial `X ⊗ I` frame, and `(x,m)=(0,0)` for the phase-sensitive resource, which exercises the `I ⊗ XZ` frame. Because both resource and sector differ, their numerical process metrics are not a controlled resource-performance comparison.
+
+The supplied CSV files reproduce the central state and process summaries printed by the executed notebook. The notebook fixes the base random seed at `240917`, uses percentile bootstrap intervals, and defines export routines for per-circuit counts, compile metadata/final layouts, bootstrap samples, Choi/PTM matrices, and the backend calibration snapshot when the recorded job is retrieved. The bootstrap intervals quantify finite-shot uncertainty for the single submitted batch, not run-to-run drift, calibration uncertainty, or SPAM uncertainty. No error mitigation or SPAM separation was applied.
