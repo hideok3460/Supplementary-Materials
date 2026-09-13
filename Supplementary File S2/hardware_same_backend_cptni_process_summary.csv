@@ -1,0 +1,3 @@
+resource,M1,M2,process_case,linear_mean_survival,linear_survival_weighted_identity_overlap,linear_minimum_choi_eigenvalue,linear_maximum_effect_eigenvalue,cptni_mean_survival,cptni_survival_weighted_identity_overlap,cptni_minimum_choi_eigenvalue,cptni_maximum_effect_eigenvalue,least_squares_objective,cptni_mean_survival_ci95_low,cptni_mean_survival_ci95_high,cptni_overlap_ci95_low,cptni_overlap_ci95_high
+canonical,0,0,"(1,0)",0.902954,0.855916,-0.008311,0.915491,0.905289,0.855941,0.0,0.917907,3.1e-05,0.899292,0.912278,0.849549,0.862343
+noncanonical,0,1,"(0,0)",0.950562,0.918457,0.003741,0.962574,0.950562,0.918457,0.003741,0.962574,0.0,0.947167,0.956574,0.912146,0.924185
