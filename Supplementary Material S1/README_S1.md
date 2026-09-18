@@ -2,7 +2,7 @@
 
 This directory contains Supplementary Material S1 for the manuscript:
 
-**Exact Channel Equivalence and Leakage-Aware Same-Backend Tomography for a Five-Qubit Coherent EPR-State Transfer Network with a GHZ-Type Resource Family**
+**Exact Logical-Channel Equivalence and Code-Space-Leakage-Aware Tomography of a Five-Qubit Coherent EPR-State Transfer Network**
 
 ## Files
 
