@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{braket}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newcommand{\CX}{\mathrm{CX}}
+\newcommand{\barbit}[1]{\overline{#1}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\title{Supplementary Material S1\\[1mm]
+\large Dirac-Expanded Bracket Notation for the Controlled-$X$ Gate}
+\author{Ami Ukai, Syunsuke Fujiwara, Takahiko Mori, and Hideaki Okazaki}
+\date{Supplement to ``Exact Channel Equivalence and Leakage-Aware Same-Backend Tomography for a Five-Qubit Coherent EPR-State Transfer Network with a GHZ-Type Resource Family''}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose and relation to the main manuscript}
+This supplementary note contains the extended controlled-$X$ derivation that was formerly included as Appendix B of the main manuscript.  The title and notation in this version are synchronized with the current main manuscript, including the use of $s$ for the input preparation-sign label and $x$ for the independent circuit-control bit; the hardware tomography and CP-TNI reconstruction are documented separately in Supplementary File S2.  The executed reproducibility exporter and the complete hardware provenance archive are supplied as Supplementary Files S3 and S4, respectively, so the actual per-circuit raw counts, final layouts, calibration snapshot, and integrity records are kept separate from this notation supplement.  It is separated from the article because the result is supporting notation rather than a central contribution of the channel-equivalence theorem.  The derivation fixes the computational-basis convention, gives a compact Dirac-expanded representation of $\CX_{i,j,q}$, embeds the operator explicitly in an arbitrary $q$-qubit tensor product, and checks the two- and three-qubit conventions used by the manuscript.  The notation is motivated by the Dirac extension of CNOT gates discussed by Yamanashi, Ozawa, and Okazaki~\cite{Yamanashi2023}.
+
+\section{Dirac-expanded controlled-$X$ representation}
+
+The controlled-$X$ gate acting on a $q$-qubit register is denoted by
+\begin{equation}
+\boxed{\CX_{i,j,q}},
+\end{equation}
+where $i$ denotes the control qubit, $j$ the target qubit, and $q$ the total number of qubits, with
+\begin{equation}
+0\le i,j\le q-1,\qquad i\neq j.
+\end{equation}
+
+The computational-basis ordering used throughout the main manuscript is
+\begin{equation}
+\ket{q_{q-1}\cdots q_1q_0}
+=
+\ket{q_{q-1}}\otimes\cdots\otimes\ket{q_1}\otimes\ket{q_0},
+\qquad q_k\in\{0,1\}.
+\label{eq:Sordering}
+\end{equation}
+Circuit wires are displayed from top to bottom in ascending index order $q_0,q_1,\ldots,q_{q-1}$.  Hence the rightmost tensor factor $\ket{q_0}$ corresponds to the top wire and the leftmost tensor factor $\ket{q_{q-1}}$ to the bottom wire.
+
+For a binary variable $x_k\in\{0,1\}$, let $\bar{x}_k=1-x_k$.  The binary power of the Pauli-$X$ operator on qubit $k$ is
+\begin{equation}
+\boxed{
+X_k^{x_k}=\ket{0}_k\bra{x_k}_k+\ket{1}_k\bra{\bar{x}_k}_k
+}.
+\label{eq:SXbinary}
+\end{equation}
+Thus
+\begin{align}
+X_k^0&=I_k=\ket{0}\bra{0}+\ket{1}\bra{1},\\
+X_k^1&=X_k=\ket{0}\bra{1}+\ket{1}\bra{0},
+\end{align}
+and, for $x_k,y_k\in\{0,1\}$,
+\begin{equation}
+\boxed{X_k^{x_k}\ket{y_k}=\ket{y_k\oplus x_k}}
+=
+\begin{cases}
+\ket{y_k},&x_k=0,\\[1mm]
+\ket{\bar{y}_k},&x_k=1.
+\end{cases}
+\label{eq:SXaction}
+\end{equation}
+
+For $\CX_{i,j,q}$, the binary value of the control qubit determines whether the target is acted on by $I_j$ or $X_j$.  Restricting first to the control and target factors gives
+\begin{equation}
+\boxed{
+\sum_{x_i=0}^{1}\ket{x_i}_i\bra{x_i}_i X_j^{x_i}
+}
+=
+\ket{0}_i\bra{0}_iI_j+\ket{1}_i\bra{1}_iX_j.
+\label{eq:SCXbinary}
+\end{equation}
+Identity action on all qubits $k\neq i,j$ is understood at this stage.
+
+Applying Equation~\eqref{eq:SXbinary} to the target qubit yields
+\begin{equation}
+X_j^{x_i}=\ket{0}_j\bra{x_i}_j+\ket{1}_j\bra{\bar{x}_i}_j.
+\label{eq:SXtarget}
+\end{equation}
+Substitution into Equation~\eqref{eq:SCXbinary} gives the compact Dirac-expanded bracket representation
+\begin{equation}
+\boxed{
+\CX_{i,j,q}
+=
+\sum_{x_i=0}^{1}
+\ket{x_i}_i\bra{x_i}_i
+\left(
+\ket{0}_j\bra{x_i}_j
++
+\ket{1}_j\bra{\bar{x}_i}_j
+\right)
+},
+\label{eq:SCXdirac}
+\end{equation}
+again with identity action on all remaining qubits.
+
+Expanding the sum gives
+\begin{align}
+\CX_{i,j,q}
+={}&
+\ket{0}_i\ket{0}_j\bra{0}_i\bra{0}_j
++
+\ket{0}_i\ket{1}_j\bra{0}_i\bra{1}_j
+\nonumber\\
+&+
+\ket{1}_i\ket{0}_j\bra{1}_i\bra{1}_j
++
+\ket{1}_i\ket{1}_j\bra{1}_i\bra{0}_j.
+\label{eq:SCXfour}
+\end{align}
+The first two terms correspond to control value $0$ and leave the target unchanged, whereas the last two correspond to control value $1$ and exchange the target states $\ket{0}_j$ and $\ket{1}_j$.
+
+\section{Explicit embedding in a $q$-qubit tensor product}
+
+For each $x_i\in\{0,1\}$, define
+\begin{equation}
+A_k^{(x_i)}=
+\begin{cases}
+\ket{x_i}_i\bra{x_i}_i,&k=i,\\[1mm]
+X_j^{x_i},&k=j,\\[1mm]
+I_k,&k\neq i,j.
+\end{cases}
+\label{eq:SAk}
+\end{equation}
+Then, consistently with Equation~\eqref{eq:Sordering}, the fully embedded operator is
+\begin{equation}
+\boxed{
+\CX_{i,j,q}
+=
+\sum_{x_i=0}^{1}
+A_{q-1}^{(x_i)}\otimes A_{q-2}^{(x_i)}\otimes\cdots\otimes A_1^{(x_i)}\otimes A_0^{(x_i)}
+}.
+\label{eq:SCXfull}
+\end{equation}
+Equation~\eqref{eq:SCXfull} fixes the tensor-factor positions explicitly and remains valid for adjacent or nonadjacent qubits and for either $i<j$ or $i>j$.
+
+For a computational-basis input $\ket{q_{q-1}\cdots q_1q_0}$, define
+\begin{equation}
+q_k'=
+\begin{cases}
+q_k,&k\neq j,\\[1mm]
+q_j\oplus q_i,&k=j.
+\end{cases}
+\end{equation}
+Then
+\begin{equation}
+\boxed{
+\CX_{i,j,q}\ket{q_{q-1}\cdots q_1q_0}
+=
+\ket{q'_{q-1}\cdots q'_1q'_0}
+},
+\end{equation}
+with
+\begin{equation}
+\boxed{q_i'=q_i,\qquad q_j'=q_j\oplus q_i},
+\end{equation}
+and $q_k'=q_k$ for $k\neq i,j$.  Equivalently,
+\begin{equation}
+\boxed{X_j^{q_i}\ket{q_j}=\ket{q_j\oplus q_i}}.
+\end{equation}
+
+\section{Consistency checks used in the manuscript}
+
+For $\CX_{0,1,2}$, the tensor ordering is
+\begin{equation}
+\ket{q_1q_0}=\ket{q_1}\otimes\ket{q_0},
+\end{equation}
+and qubit $0$ is the control while qubit $1$ is the target.  Hence
+\begin{equation}
+\boxed{\CX_{0,1,2}\ket{q_1q_0}=\ket{(q_1\oplus q_0)\,q_0}}.
+\label{eq:SCX01}
+\end{equation}
+For the two-qubit input used in the main manuscript, let $s\in\{0,1\}$ denote the preparation-sign label. The circuit-control bit used later in the five-qubit transfer network is denoted separately by $x$. Then
+\begin{align}
+\CX_{0,1,2}
+\left(
+\ket{y}_1\otimes
+\left[\alpha\ket{0}_0+(-1)^s\beta\ket{1}_0\right]
+\right)
+&=
+\alpha\ket{y,0}+(-1)^s\beta\ket{\bar y,1}.
+\label{eq:SBxy}
+\end{align}
+Thus the controlled-$X$ convention reproduces the encoded state definition used in the manuscript without identifying the preparation label $s$ with the independent circuit-control parameter $x$.
+
+As a second check, consider $\CX_{0,2,3}$.  With
+\begin{equation}
+\ket{q_2q_1q_0}=\ket{q_2}\otimes\ket{q_1}\otimes\ket{q_0},
+\end{equation}
+qubit $0$ is the control, qubit $2$ the target, and qubit $1$ is unchanged.  Therefore
+\begin{equation}
+\boxed{
+\CX_{0,2,3}\ket{q_2q_1q_0}
+=
+\ket{(q_2\oplus q_0)\,q_1q_0}
+}.
+\label{eq:SCX02}
+\end{equation}
+
+Consequently, the control-target expression
+\begin{equation}
+\boxed{
+\CX_{i,j,q}
+=
+\sum_{x_i=0}^{1}\ket{x_i}_i\bra{x_i}_i X_j^{x_i}
+}
+\end{equation}
+together with the explicit tensor embedding in Equation~\eqref{eq:SCXfull} provides a single Dirac-expanded representation valid for arbitrary register size and qubit placement.
+
+\begin{thebibliography}{1}
+\bibitem{Yamanashi2023}
+Yamanashi, S.; Ozawa, K.; Okazaki, H. On Dirac extension bra-ket notations of CNOT gates. \emph{IEICE Tech. Rep.} \textbf{2023}, \emph{122}, CAS2022-61, 1--6. (In Japanese).
+\end{thebibliography}
+
+\end{document}
